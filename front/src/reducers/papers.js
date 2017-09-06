@@ -1,5 +1,5 @@
 import {
-    ADD_PAPERS, UPLOAD_PAPERS
+    UPLOAD_PAPERS
 } from '../constants/actionTypes'
 
 export default (state = {}, action) => {
@@ -7,7 +7,7 @@ export default (state = {}, action) => {
         case UPLOAD_PAPERS:
             return {
                 ...state,
-                papers: action.payload.papers
+                // papers: action.payload.papers
             }
         default:
             return state

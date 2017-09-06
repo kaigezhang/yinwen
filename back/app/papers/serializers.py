@@ -5,7 +5,8 @@ class PaperSchema(Schema):
 
     @pre_load
     def make_paper(self, data):
-        data = data['file']
+        print(type(data))
+        # data = data
         return data
 
     @post_dump

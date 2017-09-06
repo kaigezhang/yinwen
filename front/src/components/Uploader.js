@@ -11,43 +11,25 @@ const mapDispatchToProps = dispatch => ({
     })
 })
 
-class Uploader extends React.Component {
-    constructor () {
-        super()
-        this.state = {
-            files: []
-        }
-        this.onDrop = files => {
-            this.setState({
-                files
-            })
-            agent.Papers.upload(files)
-        }
+const Uploader = props => {
+    const onDrop = (files) => {
+        console.log(files)
+        let req = agent.Papers.upload()
+        files.forEach(file => {
+            req.attach('file', file)
+        })
+        props.onDrop(req.then(res => res.body))
     }
 
-    render () {
-        return (
-            <section>
-                <div className="dropzone">
-                    <Dropzone onDrop={this.onDrop}>
-                        <p>批量上传文献</p>
-                    </Dropzone>
-                </div>
-                <aside>
-                    <h2>需要上传的文件</h2>
-                    <ul>
-                        {
-                            this.state.files.map(
-                                f => <li key={f.name}>{f.name} -- {f.size}</li>
-                            )
-                        }
-                    </ul>
-                </aside>
-            </section>
-        )
-
-    }
+    return (
+        <section>
+            <div className="dropzone">
+                <Dropzone onDrop={onDrop}>
+                    <p>批量上传文献</p>
+                </Dropzone>
+            </div>
+        </section>
+    )
 }
-
 
 export default connect(null, mapDispatchToProps)(Uploader)

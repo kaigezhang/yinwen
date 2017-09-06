@@ -6,13 +6,13 @@ const superagent = superagentPromise(
 )
 
 const API_ROOT = 'http://127.0.0.1:5000/api'
-const encode = encodeURIComponent
+// const encode = encodeURIComponent
 const responseBody = res => res.body
 
 let token = null
 const tokenPlugin = req => {
     if (token) {
-        res.set('authorization', `Token ${token}`)
+        req.set('authorization', `Token ${token}`)
     }
 }
 
@@ -24,16 +24,18 @@ const requests = {
     put: (url, body) =>
         superagent.put(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
     post: (url, body) =>
-        superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
+        superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
+    upload: (url) =>
+        superagent.post(`${API_ROOT}${url}`)
 }
 
 const Papers = {
     all: () => requests.get('/papers'),
-    upload: papers => requests.post('/papers', { papers })
+    upload: () => requests.upload('/papers')
 }
 
 
 export default {
     Papers,
-    setToken: _token => { token: _token }
+    // setToken: _token => { token: _token }
 }

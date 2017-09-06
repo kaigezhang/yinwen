@@ -1,11 +1,14 @@
 import React from 'react'
-
+import { Switch, Route } from 'react-router-dom'
+import Uploader from "./Uploader";
 
 class App extends React.Component {
     render () {
         return (
             <div>
-                { this.props.children }
+                <Switch>
+                    <Route path="/upload" component={Uploader}></Route>
+                </Switch>
             </div>
         )
     }
